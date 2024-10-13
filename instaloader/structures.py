@@ -323,7 +323,7 @@ class Post:
                 '2b0673e0dc4580674a88d426fe00ea90',
                 {'shortcode': self.shortcode}
             )
-            self._full_metadata_dict = pic_json['data']['shortcode_media']
+            self._full_metadata_dict = pic_json['data']['xdt_shortcode_media']
             if self._full_metadata_dict is None:
                 raise BadResponseException("Fetching Post metadata failed.")
             if self.shortcode != self._full_metadata_dict['shortcode']:
@@ -749,7 +749,7 @@ class Post:
         return NodeIterator(
             self._context,
             '97b41c52301f77ce508f55e66d17620e',
-            lambda d: d['data']['shortcode_media']['edge_media_to_parent_comment'],
+            lambda d: d['data']['xdt_shortcode_media']['edge_media_to_parent_comment'],
             _postcomment,
             {'shortcode': self.shortcode},
             'https://www.instagram.com/p/{0}/'.format(self.shortcode),
@@ -775,7 +775,7 @@ class Post:
         yield from NodeIterator(
             self._context,
             '1cb6ec562846122743b61e492c85999f',
-            lambda d: d['data']['shortcode_media']['edge_liked_by'],
+            lambda d: d['data']['xdt_shortcode_media']['edge_liked_by'],
             lambda n: Profile(self._context, n),
             {'shortcode': self.shortcode},
             'https://www.instagram.com/p/{0}/'.format(self.shortcode),
@@ -1389,7 +1389,7 @@ class StoryItem:
             '2b0673e0dc4580674a88d426fe00ea90',
             {'shortcode': Post.mediaid_to_shortcode(mediaid)}
         )
-        shortcode_media = pic_json['data']['shortcode_media']
+        shortcode_media = pic_json['data']['xdt_shortcode_media']
         if shortcode_media is None:
             raise BadResponseException("Fetching StoryItem metadata failed.")
         return cls(context, shortcode_media)
