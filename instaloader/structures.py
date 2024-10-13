@@ -319,8 +319,8 @@ class Post:
 
     def _obtain_metadata(self):
         if not self._full_metadata_dict:
-            pic_json = self._context.graphql_query(
-                '2b0673e0dc4580674a88d426fe00ea90',
+            pic_json = self._context.doc_id_graphql_query(
+                '8845758582119845',
                 {'shortcode': self.shortcode}
             )
             self._full_metadata_dict = pic_json['data']['xdt_shortcode_media']
@@ -1385,8 +1385,8 @@ class StoryItem:
 
         .. versionadded:: 4.9
         """
-        pic_json = context.graphql_query(
-            '2b0673e0dc4580674a88d426fe00ea90',
+        pic_json = context.doc_id_graphql_query(
+            '8845758582119845',
             {'shortcode': Post.mediaid_to_shortcode(mediaid)}
         )
         shortcode_media = pic_json['data']['xdt_shortcode_media']
