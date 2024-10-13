@@ -274,7 +274,7 @@ class Post:
     @staticmethod
     def supported_graphql_types() -> List[str]:
         """The values of __typename fields that the :class:`Post` class can handle."""
-        return ["GraphImage", "GraphVideo", "GraphSidecar"]
+        return ["GraphImage", "GraphVideo", "GraphSidecar", "XDTGraphImage", "XDTGraphVideo", "XDTGraphSidecar"]
 
     def _asdict(self):
         node = self._node
@@ -438,7 +438,7 @@ class Post:
 
         .. versionadded:: 4.6
         """
-        if self.typename == 'GraphSidecar':
+        if self.typename in ['GraphSidecar', 'XDTGraphSidecar']:
             edges = self._field('edge_sidecar_to_children', 'edges')
             return len(edges)
         return 1
@@ -455,7 +455,7 @@ class Post:
 
         .. versionadded:: 4.7
         """
-        if self.typename == 'GraphSidecar':
+        if self.typename in ['GraphSidecar', 'XDTGraphSidecar']:
             edges = self._field('edge_sidecar_to_children', 'edges')
             return [edge['node']['is_video'] for edge in edges]
         return [self.is_video]
@@ -467,7 +467,7 @@ class Post:
         .. versionchanged:: 4.6
            Added parameters *start* and *end* to specify a slice of sidecar media.
         """
-        if self.typename == 'GraphSidecar':
+        if self.typename in ['GraphSidecar', 'XDTGraphSidecar']:
             edges = self._field('edge_sidecar_to_children', 'edges')
             if end < 0:
                 end = len(edges)-1
